@@ -1,0 +1,11 @@
+{
+    email {env.LETSENCRYPT_EMAIL}
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+    # Optional, faster reload
+    # auto_https disable_redirects
+}
+
+jan.{env.HOST_DOMAIN}, www.{env.HOST_DOMAIN}, {env.HOST_DOMAIN} {
+    reverse_proxy web-app:3031
+    encode gzip
+}

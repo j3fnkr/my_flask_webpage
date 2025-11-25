@@ -9,17 +9,18 @@ services:
         environment:
             <<: *shared-env
             FLASK_ENV: development
-            VIRTUAL_HOST: localhost
             DB_HOST: postgres
             DB_PORT: 5432
-    nginx:
-      volumes:
-        - ./certs/cert.pem:/etc/nginx/certs/localhost.crt:ro
-        - ./certs/key.pem:/etc/nginx/certs/localhost.key:ro
-      ports:
-        - "80:80"
-        - "8080:443"
-
+    caddy:
+        volumes:
+            - ${PWD}/conf/dev:/etc/caddy:ro
+            # Allow CA root cert install (development only)
+            - type: tmpfs
+              target: /usr/local/share/ca-certificates
+            - type: tmpfs
+              target: /etc/ssl/certs
+        ports:
+            - "8081:8081"
     postgres:
       environment:
         <<: *shared-env
