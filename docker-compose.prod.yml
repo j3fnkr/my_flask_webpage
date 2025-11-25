@@ -9,6 +9,7 @@ services:
       - ${PWD}/conf/prod:/etc/caddy:ro
     environment:
       HOST_DOMAIN: ${HOST_DOMAIN}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     ports:
       - "80:80"
       - "443:443"

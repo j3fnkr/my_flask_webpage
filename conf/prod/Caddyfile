@@ -1,5 +1,5 @@
 {
-    email {env.LETSENCRYPT_EMAIL}
+    email {$LETSENCRYPT_EMAIL}
     acme_ca https://acme-v02.api.letsencrypt.org/directory
     # Optional, faster reload
     # auto_https disable_redirects
