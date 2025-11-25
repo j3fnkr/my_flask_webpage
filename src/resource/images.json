@@ -17,6 +17,12 @@
       "alt": "Bachelor's Thesis - collision avoidance",
       "cc": "https://mujoco.org/",
       "cc_author": "MuJoCo Simulation"
+    },
+    {
+        "src": "img/matrix/element-io-sign-up.png",
+        "alt": "matrix element signup",
+        "cc": "https://matrix.org/docs/chat_basics/matrix-for-im/",
+        "cc_author": "matrix.org"
     }
 
   ]

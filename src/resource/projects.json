@@ -1,6 +1,22 @@
 {
   "projects": [
     {
+      "title": "Hosting a [matrix] Server",
+      "title_brief": "Matrix Server",
+      "period": "May 2025 - Aug 2025",
+      "description": "Setting up a matrix server using docker",
+      "link": "matrix",
+      "link_ext": "",
+      "img_folder": "matrix",
+      "bg_image": "img/matrix/matrix_cmd_bg.png",
+      "image": {
+        "src": "img/matrix/matrix_cmd.png",
+        "alt": "matrix element signup",
+        "cc": "",
+        "cc_author": "Jan Fenker"
+      }
+    },
+    {
       "title": "Web-Hosting on Raspberry Pi",
       "title_brief": "Web-Hosting on Raspberry Pi",
       "period": "Feb 2025 - Apr 2025",

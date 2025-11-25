@@ -1,0 +1,94 @@
+{% extends "project.html" %}
+
+{% block project_idea %}
+Matrix is an open source chat protocol that allows for secure and decentralized communication. This gives you full
+control over your data and a secure and private communication option with your friends, family or colleagues.
+The matrix project consists of a big community, that contributes to several server implementations and various
+clients you can choose from.
+{% endblock %}
+
+{% block description %}
+</p>
+<h4>About <a href="https://matrix.org" target="_blank">matrix.org</a></h4>
+<p>Matrix is an open‑standard, decentralized real‑time communication protocol for messaging, VoIP, and VoIP signaling.</p>
+
+<br>
+
+<h4>Requirements</h4>
+<!-- list of requirements -->
+<ul>
+    <li>Domain</li>
+    <li>Server (e.g. Raspberry Pi with min. 2 GB RAM or third-party VPS)</li>
+    <li>SSL certificate (e.g. via Let's Encrypt)</li>
+    <li>backup solution (backup server/repository)</li>
+</ul>
+
+<br>
+
+<h4>Docker services</h4>
+<!-- list of docker services -->
+<ul>
+    <li><strong>matrix conduit</strong>: lightweight matrix server</li>
+    <li><strong>nginx</strong> (with acme-companion): reverse proxy for traffic routing (including automatic SSL certificate
+        management)
+    </li>
+    <li><strong>kopia</strong>: backup management</li>
+    <li>(tar-backup: script to dump the database to the kopia backup folder)</li>
+</ul>
+
+<p>
+    {% endblock %}
+
+    {% block docu %}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Services</h3>
+        <h4>matrix conduit</h4>
+        <p>
+            Matrix conduit is a lightweight [matrix] homeserver implementation written in Rust. It is simpler than
+            Synapse and therefore easy to set up. However, it is still in active development and does not yet support all
+            features e. g. the api commands for room management are not yet implemented.
+            But for basic chat functionality it works well.
+        </p>
+        <h4><a href="">nginx</a></h4>
+        <p>
+            Nginx is a reverse proxy that forwards requests to the matrix server and serves the server's endpoint.
+        </p>
+        <h4><a href="https://kopia.io/" target="_blank">kopia</a></h4>
+        <p>
+            For regular database backup creation kopia is used. It offers user-controlled end-to-end encryption, deduplication 
+            and compression. It can run scheduled backups and offers custom retention policies. Additionally, 
+            it includes a web-interface where the configuration can be set in a graphical user interface. <br>
+            Furthermore, kopia is fast. In a 
+            <a href="https://web.archive.org/web/20231202012341/https://www.kasten.io/kubernetes/resources/blog/benchmarking-kopia-architecture-scale-and-performance" target="_blank" class="link">
+              benchmark
+            </a>
+            test kopia performed faster than restic (probably the most common backup tool) in most scenarios. 
+            
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>Connect with a client</h3>
+        <p>
+          When the server infrastructure is set up and running, it is time to connect to the matrix server via a client.
+          There exist several matrix clients with different features and designs. You can choose one of your choice.
+          When signing up, instead of using the default option "matrix.org", you need to specify your servers URL to connect
+          to your private server. After creating an account you can start chatting with other people that are registered on any 
+          matrix protocol based server. Below, you can see the signup mask of the popular matrix client Element.
+        </p>
+        <div class="position-relative">
+          <img src="{{ url_for('static', filename='img/matrix/element-io-sign-up.png') }}" alt="Element.io Sign Up"
+             class="d-block w-100 img-thumbnail">
+          <a href="https://matrix.org/docs/chat_basics/matrix-for-im/" target="_blank"
+          class="copyright-badge">
+          &copy; matrix.org
+          </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block takeaway %}
+
+{% endblock %}
