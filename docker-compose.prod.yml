@@ -7,6 +7,8 @@ services:
   caddy:
     volumes:
       - ${PWD}/conf/prod:/etc/caddy:ro
+    environment:
+      HOST_DOMAIN: ${HOST_DOMAIN}
     ports:
       - "80:80"
       - "443:443"

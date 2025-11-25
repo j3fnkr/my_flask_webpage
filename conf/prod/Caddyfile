@@ -5,7 +5,7 @@
     # auto_https disable_redirects
 }
 
-jan.{env.HOST_DOMAIN}, www.{env.HOST_DOMAIN}, {env.HOST_DOMAIN} {
+jan.{$HOST_DOMAIN}, www.{$HOST_DOMAIN}, {$HOST_DOMAIN} {
     reverse_proxy web-app:3031
     encode gzip
 }
