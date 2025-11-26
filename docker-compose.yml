@@ -20,6 +20,10 @@ services:
     volumes:
       - caddy_data:/data
       - caddy_config:/config
+      # for goaccess dashboard -> expose html and logs
+      - ./logs:/logs
+      - goaccess_html:/usr/share/caddy/html:ro
+     # - access_logs:/var/log/access.log
     tmpfs:
       - /tmp
     links:
@@ -29,6 +33,24 @@ services:
     networks:
       - backend
     read_only: true
+    #command: ["sh", "-c", "touch /var/log/access.log && caddy run"]
+  goaccess:
+    image: allinurl/goaccess:latest
+    command: >
+      sh -c "goaccess /logs/access.log
+             --log-format=CADDY
+             --date-format=%s \
+             --time-format=%s \
+             --real-time-html
+             --geoip-database=/geo/GeoLite2-Country.mmdb
+             -o /usr/share/caddy/html/index.html
+             --daemonize"
+    volumes:
+      - ./logs:/logs:ro  # read the combined log from Caddy
+      - ./geo:/geo:ro  # GeoIP DB
+      - goaccess_html:/usr/share/caddy/html  # where the HTML lives
+    depends_on:
+      - caddy
   postgres:
     image: postgres:17.4
     container_name: postgres_jan
@@ -46,6 +68,8 @@ volumes:
   caddy_data: {}
   caddy_config: {}
   pgdata: {}
+  goaccess_html: {}
+  access_logs: {}
 
 networks:
   backend: {}

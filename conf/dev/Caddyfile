@@ -1,5 +1,32 @@
 
 localhost:8081 {
-    reverse_proxy web-app:3031
-    encode gzip
+    @stats_path {
+        path /stats/*
+    }
+
+    @not_stats_path {
+        not {
+            path /stats/*
+        }
+    }
+
+    log {
+      output file /logs/access.log {
+          roll_size 10mb
+          roll_keep 7
+          roll_keep_for 168h
+        }
+    }
+
+    # Everything except /stats/* goes to the app
+    reverse_proxy @not_stats_path web-app:3031
+
+    # /stats/* served by GoAccess report
+    handle @stats_path {
+        root * /usr/share/caddy/html
+        file_server
+    }
+
+
 }
+
