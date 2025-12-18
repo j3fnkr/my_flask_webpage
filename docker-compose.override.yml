@@ -5,46 +5,46 @@ x-shared-env: &shared-env
   POSTGRES_DB: me
 
 services:
-    web-app:
-        environment:
-            <<: *shared-env
-            FLASK_ENV: development
-            DB_HOST: postgres
-            DB_PORT: 5432
-    caddy:
-      volumes:
-          - ./conf/dev:/etc/caddy:ro
-          # Allow CA root cert install (development only)
-          - type: tmpfs
-            target: /usr/local/share/ca-certificates
-          - type: tmpfs
-            target: /etc/ssl/certs
-          # for goaccess dashboard -> expose html and logs
-          - caddy_log:/logs
-          - goaccess_html:/usr/share/caddy/html:ro
-          # - access_logs:/var/log/access.log
-      ports:
-          - "8081:8081"
-    goaccess:
-      image: allinurl/goaccess:latest
-      volumes:
-        - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
-        - caddy_log:/srv/logs:ro  # read the combined log from Caddy
-        - ./goaccess/geo:/geo:ro  # GeoIP DB
-        - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
-      depends_on:
-        - caddy
-      command: ["--no-global-config", 
-                "--config-file=/srv/config/goaccess.conf", 
-                "--ws-url=wss://localhost:8081/stats/socket"
-               ]
-      restart: unless-stopped  
-      networks:
-        - backend
+  web-app:
+    environment:
+      <<: *shared-env
+      FLASK_ENV: development
+      DB_HOST: postgres
+      DB_PORT: 5432
+  caddy:
+    volumes:
+      - ./conf/dev:/etc/caddy:ro
+      # Allow CA root cert install (development only)
+      - type: tmpfs
+        target: /usr/local/share/ca-certificates
+      - type: tmpfs
+        target: /etc/ssl/certs
+      # for goaccess dashboard -> expose html and logs
+      - caddy_log:/logs
+      - goaccess_html:/usr/share/caddy/html:ro
+      # - access_logs:/var/log/access.log
+    ports:
+      - "8081:8081"
+  goaccess:
+    image: allinurl/goaccess:latest
+    volumes:
+      - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
+      - caddy_log:/srv/logs:ro  # read the combined log from Caddy
+      - ./goaccess/geo:/geo:ro  # GeoIP DB
+      - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+    depends_on:
+      - caddy
+    command: ["--no-global-config", 
+              "--config-file=/srv/config/goaccess.conf", 
+              "--ws-url=wss://localhost:8081/stats/socket"
+             ]
+    restart: unless-stopped  
+    networks:
+      - backend
 
-    postgres:
-      environment:
-        <<: *shared-env
+  postgres:
+    environment:
+      <<: *shared-env
 
 volumes:
   caddy_log: {}
