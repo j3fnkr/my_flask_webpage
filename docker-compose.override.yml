@@ -28,13 +28,16 @@ services:
     goaccess:
       image: allinurl/goaccess:latest
       volumes:
-        - ./conf/dev/goaccess.conf:/srv/config/goaccess.conf:ro
+        - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
         - ./logs:/srv/logs:ro  # read the combined log from Caddy
-        - ./geo:/geo:ro  # GeoIP DB
+        - ./goaccess/geo:/geo:ro  # GeoIP DB
         - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
       depends_on:
         - caddy
-      command: ["--no-global-config", "--config-file=/srv/config/goaccess.conf", "--geoip-database=/geo/GeoLite2-Country.mmdb"]
+      command: ["--no-global-config", 
+                "--config-file=/srv/config/goaccess.conf", 
+                "--ws-url=wss://localhost:8081/stats/socket"
+               ]
       restart: unless-stopped  
       networks:
         - backend

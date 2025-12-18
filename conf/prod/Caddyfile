@@ -16,8 +16,10 @@ jan.{$HOST_DOMAIN}, www.{$HOST_DOMAIN}, {$HOST_DOMAIN} {
         }
     }
 
-    # Match /socket, proxy websocket to goAccess
-    reverse_proxy /socket* goaccess:7890
+    # Strip /stats/socket and forward to GoAccess root / for websocket communication
+    handle_path /stats/socket* {
+        reverse_proxy goaccess:7890
+    }
 
     # /stats/* served by GoAccess service
     handle_path /stats* {
