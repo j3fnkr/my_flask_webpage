@@ -17,23 +17,23 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
-    goaccess:
-      image: allinurl/goaccess:latest
-      volumes:
-        - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
-        - caddy_log:/srv/logs:ro  # read the combined log from Caddy
-        - ./goaccess/geo:/geo:ro  # GeoIP DB
-        - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
-      depends_on:
-        - caddy
-      command: ["--no-global-config", 
-                "--config-file=/srv/config/goaccess.conf", 
-                "--ws-url=wss://${HOST_DOMAIN}/stats/socket"
-               ]
-      restart: unless-stopped  
-      networks:
-        - backend
 
+  goaccess:
+    image: allinurl/goaccess:latest
+    volumes:
+      - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
+      - caddy_log:/srv/logs:ro  # read the combined log from Caddy
+      - ./goaccess/geo:/geo:ro  # GeoIP DB
+      - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+    depends_on:
+      - caddy
+    command: ["--no-global-config", 
+              "--config-file=/srv/config/goaccess.conf", 
+              "--ws-url=wss://${HOST_DOMAIN}/stats/socket"
+             ]
+    restart: unless-stopped  
+    networks:
+      - backend
   postgres:
     environment:
       POSTGRES_USER: ${DB_USER}

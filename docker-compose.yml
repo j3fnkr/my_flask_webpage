@@ -47,7 +47,6 @@ volumes:
   caddy_config: {}
   pgdata: {}
   goaccess_html: {}
-  access_logs: {}
 
 networks:
   backend: {}
