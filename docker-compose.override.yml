@@ -20,7 +20,7 @@ services:
           - type: tmpfs
             target: /etc/ssl/certs
           # for goaccess dashboard -> expose html and logs
-          - ./logs:/logs
+          - caddy_log:/logs
           - goaccess_html:/usr/share/caddy/html:ro
           # - access_logs:/var/log/access.log
       ports:
@@ -29,7 +29,7 @@ services:
       image: allinurl/goaccess:latest
       volumes:
         - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
-        - ./logs:/srv/logs:ro  # read the combined log from Caddy
+        - caddy_log:/srv/logs:ro  # read the combined log from Caddy
         - ./goaccess/geo:/geo:ro  # GeoIP DB
         - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
       depends_on:
@@ -45,3 +45,7 @@ services:
     postgres:
       environment:
         <<: *shared-env
+
+volumes:
+  caddy_log: {}
+

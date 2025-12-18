@@ -8,9 +8,8 @@ services:
     volumes:
       - ./conf/prod:/etc/caddy:ro
       # for goaccess dashboard -> expose html and logs
-      - ./logs:/logs
+      - caddy_log:/logs
       - goaccess_html:/usr/share/caddy/html:ro
-      # - access_logs:/var/log/access.log
     environment:
       HOST_DOMAIN: ${HOST_DOMAIN}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
@@ -22,7 +21,7 @@ services:
       image: allinurl/goaccess:latest
       volumes:
         - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
-        - ./logs:/srv/logs:ro  # read the combined log from Caddy
+        - caddy_log:/srv/logs:ro  # read the combined log from Caddy
         - ./goaccess/geo:/geo:ro  # GeoIP DB
         - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
       depends_on:
@@ -46,3 +45,4 @@ volumes:
   vhost: {}
   html: {}
   acme: {}
+  caddy_log: {}
