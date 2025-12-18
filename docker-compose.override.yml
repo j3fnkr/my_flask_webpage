@@ -12,15 +12,33 @@ services:
             DB_HOST: postgres
             DB_PORT: 5432
     caddy:
-        volumes:
-            - ${PWD}/conf/dev:/etc/caddy:ro
-            # Allow CA root cert install (development only)
-            - type: tmpfs
-              target: /usr/local/share/ca-certificates
-            - type: tmpfs
-              target: /etc/ssl/certs
-        ports:
-            - "8081:8081"
+      volumes:
+          - ./conf/dev:/etc/caddy:ro
+          # Allow CA root cert install (development only)
+          - type: tmpfs
+            target: /usr/local/share/ca-certificates
+          - type: tmpfs
+            target: /etc/ssl/certs
+          # for goaccess dashboard -> expose html and logs
+          - ./logs:/logs
+          - goaccess_html:/usr/share/caddy/html:ro
+          # - access_logs:/var/log/access.log
+      ports:
+          - "8081:8081"
+    goaccess:
+      image: allinurl/goaccess:latest
+      volumes:
+        - ./conf/dev/goaccess.conf:/srv/config/goaccess.conf:ro
+        - ./logs:/srv/logs:ro  # read the combined log from Caddy
+        - ./geo:/geo:ro  # GeoIP DB
+        - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+      depends_on:
+        - caddy
+      command: ["--no-global-config", "--config-file=/srv/config/goaccess.conf", "--geoip-database=/geo/GeoLite2-Country.mmdb"]
+      restart: unless-stopped  
+      networks:
+        - backend
+
     postgres:
       environment:
         <<: *shared-env

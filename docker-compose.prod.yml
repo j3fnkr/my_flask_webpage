@@ -6,7 +6,11 @@ services:
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
   caddy:
     volumes:
-      - ${PWD}/conf/prod:/etc/caddy:ro
+      - ./conf/prod:/etc/caddy:ro
+      # for goaccess dashboard -> expose html and logs
+      - ./logs:/logs
+      - goaccess_html:/usr/share/caddy/html:ro
+      # - access_logs:/var/log/access.log
     environment:
       HOST_DOMAIN: ${HOST_DOMAIN}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
@@ -14,6 +18,23 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
+    goaccess:
+      image: allinurl/goaccess:latest
+      volumes:
+        - ./conf/prod/goaccess.conf:/srv/config/goaccess.conf:ro
+        - ./logs:/srv/logs:ro  # read the combined log from Caddy
+        - ./geo:/geo:ro  # GeoIP DB
+        - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+      depends_on:
+        - caddy
+      command: ["--no-global-config", 
+                "--config-file=/srv/config/goaccess.conf",
+                "--geoip-database=/geo/GeoLite2-Country.mmdb"
+               ]
+      restart: unless-stopped  
+      networks:
+        - backend
+
   postgres:
     environment:
       POSTGRES_USER: ${DB_USER}

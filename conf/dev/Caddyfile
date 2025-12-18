@@ -1,32 +1,27 @@
 
 localhost:8081 {
-    @stats_path {
-        path /stats/*
-    }
-
-    @not_stats_path {
-        not {
-            path /stats/*
-        }
-    }
-
     log {
-      output file /logs/access.log {
-          roll_size 10mb
-          roll_keep 7
-          roll_keep_for 168h
+        output file /logs/access.log {
+            roll_size 10mb
+            roll_keep 7
+            roll_keep_for 168h
+            roll_local_time
         }
     }
 
-    # Everything except /stats/* goes to the app
-    reverse_proxy @not_stats_path web-app:3031
+    # Match /stats/socket, proxy websocket to goAccess
+    reverse_proxy /socket* goaccess:7890
 
-    # /stats/* served by GoAccess report
-    handle @stats_path {
+    # /stats/* served by GoAccess service
+    handle_path /stats* {
+        # Strip /stats prefix, so /stats/index.html → /index.html
+        
+        # Serve static files from GoAccess HTML output
         root * /usr/share/caddy/html
+        try_files {path} /index.html
         file_server
     }
 
-
+    # Everything else goes to the app
+    reverse_proxy web-app:3031
 }
-
