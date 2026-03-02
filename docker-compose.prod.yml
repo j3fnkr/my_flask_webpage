@@ -29,7 +29,7 @@ services:
       - caddy
     command: ["--no-global-config", 
               "--config-file=/srv/config/goaccess.conf", 
-              "--ws-url=wss://${HOST_DOMAIN}/stats/socket"
+    "--ws-url=wss://${HOST_DOMAIN}:443/stats/socket"
              ]
     restart: unless-stopped  
     networks:
