@@ -11,3 +11,4 @@ src/app/__pycache__/
 src/dev.db
 __pycache__
 .env
+*.db

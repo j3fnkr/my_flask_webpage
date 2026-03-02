@@ -1,4 +1,5 @@
 {% extends "project.html" %}
+{% from "macros.html" import render_image %}
 
 {% block project_css %}
 .carousel-inner {
@@ -40,16 +41,8 @@ Moreover, it strengthens the ability to work in an interdisciplinary team.
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for img in project.gallery %}
-                <div class="carousel-item {% if loop.first %}active{% endif %} position-relative">
-                    <img src="{{ url_for('static', filename=img.src) }}"
-                         class="d-block w-100 img-thumbnail"
-                         alt={{ img.alt }}>
-
-                    {% if img.cc %}
-                    <a href="{{ img.cc }}" target="_blank" class="copyright-badge">
-                        &copy; {{ img.cc_author }}
-                    </a>
-                    {% endif %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    {{ render_image(img.src, alt=img.alt, link=img.cc, link_text=img.cc_author) }}
                 </div>
                 {% endfor %}
             </div>

@@ -1,0 +1,16 @@
+
+{# Various building blocks for the project pages #}
+{# Independent short macros, to allow for greater flexibility #}
+
+
+{% macro render_image(path, alt="default image", link=None, link_text=None) %}
+    <div class="position-relative">
+      <img src="{{ url_for('static', filename=path) }}" alt="{{ alt }}" class="d-block w-100 img-thumbnail">
+        {% if link %}
+          <a href="{{ link }}" target="_blank"
+          class="copyright-badge">
+            &copy; {{ link_text }}
+          </a>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -1,4 +1,5 @@
 {% extends "project.html" %}
+{% from "macros.html" import render_image %}
 
 {% block project_idea %}
 Matrix is an open source chat protocol that allows for secure and decentralized communication. This gives you full
@@ -73,14 +74,7 @@ clients you can choose from.
           to your private server. After creating an account you can start chatting with other people that are registered on any 
           matrix protocol based server. Below, you can see the signup mask of the popular matrix client Element.
         </p>
-        <div class="position-relative">
-          <img src="{{ url_for('static', filename='img/matrix/element-io-sign-up.png') }}" alt="Element.io Sign Up"
-             class="d-block w-100 img-thumbnail">
-          <a href="https://matrix.org/docs/chat_basics/matrix-for-im/" target="_blank"
-          class="copyright-badge">
-          &copy; matrix.org
-          </a>
-        </div>
+        {{ render_image('img/matrix/element-io-sign-up.png', alt='Element.io Sign Up', link='https://matrix.org/docs/chat_basics/matrix-for-im/', link_text='matrix.org') }}
     </div>
 </div>
 
