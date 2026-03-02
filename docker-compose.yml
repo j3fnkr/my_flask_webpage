@@ -6,25 +6,22 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    environment:
-      VIRTUAL_PROTO: uwsgi
-      VIRTUAL_PORT: 3031
     links:
       - postgres
     networks:
       - backend
     volumes:
       - ./src:/home/app/src
-  nginx:
-    image: nginxproxy/nginx-proxy:1.7
-    tmpfs:
-      - /var/run
-      - /tmp
+  caddy:
+    image: caddy:2.10
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - data_static:/home/app/src/app/static:ro
-      - cache_nginx:/var/cache/nginx
-      - state_nginx:/etc/nginx
+      - caddy_data:/data
+      - caddy_config:/config
+    tmpfs:
+      - /tmp
     links:
       - web-app
     depends_on:
@@ -46,10 +43,10 @@ services:
     read_only: true
 
 volumes:
-  data_static: {}
-  cache_nginx: {}
-  state_nginx: {}
+  caddy_data: {}
+  caddy_config: {}
   pgdata: {}
+  goaccess_html: {}
 
 networks:
   backend: {}

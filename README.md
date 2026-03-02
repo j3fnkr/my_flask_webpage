@@ -227,3 +227,8 @@ challenge
 #### environment
 - `DEFAULT_EMAIL`: The email address that needs to be provided to letsencrypt for certificate requests.
 
+## Statistics with [GoAccess](https://hub.docker.com/r/allinurl/goaccess)
+GoAccess is an open source real-time web log analyzer and interactive viewer.
+It would require some changes in my nginx-proxy config. This is now the right moment to switch to the all-in-one solution caddy.
+1) change to caddy
+2) include goaccess on a stats html page 

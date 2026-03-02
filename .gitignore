@@ -9,3 +9,5 @@ src/setup/__pycache__/
 src/my_flask_webpage/__pycache__/
 src/app/__pycache__/
 src/dev.db
+__pycache__
+.env

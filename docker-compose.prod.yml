@@ -3,34 +3,35 @@ services:
   web-app:
     environment:
       FLASK_ENV: production
-      VIRTUAL_HOST: "${HOST_DOMAIN}, www.${HOST_DOMAIN}, jan.${HOST_DOMAIN}"
-      LETSENCRYPT_HOST: "${HOST_DOMAIN}, www.${HOST_DOMAIN}, jan.${HOST_DOMAIN}"
-      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
-  nginx:
-    restart: unless-stopped
+  caddy:
     volumes:
-      - certs:/etc/nginx/certs:ro
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
+      - ./conf/prod:/etc/caddy:ro
+      # for goaccess dashboard -> expose html and logs
+      - caddy_log:/logs
+      - goaccess_html:/usr/share/caddy/html:ro
+    environment:
+      HOST_DOMAIN: ${HOST_DOMAIN}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     ports:
       - "80:80"
       - "443:443"
-  nginx-letsencrypt:
-    restart: unless-stopped
-    image: nginxproxy/acme-companion:2.5.2
-    depends_on:
-      - nginx
-    volumes_from:
-      - nginx
+      - "443:443/udp"
+
+  goaccess:
+    image: allinurl/goaccess:latest
     volumes:
-      - certs:/etc/nginx/certs:rw
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/acme.sh
-    environment:
-      DEFAULT_EMAIL: ${LETSENCRYPT_EMAIL:?}
+      - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
+      - caddy_log:/srv/logs:ro  # read the combined log from Caddy
+      - ./goaccess/geo:/geo:ro  # GeoIP DB
+      - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+    depends_on:
+      - caddy
+    command: ["--no-global-config", 
+              "--config-file=/srv/config/goaccess.conf", 
+              "--ws-url=wss://${HOST_DOMAIN}/stats/socket"
+             ]
+    restart: unless-stopped  
     networks:
       - backend
   postgres:
@@ -44,3 +45,4 @@ volumes:
   vhost: {}
   html: {}
   acme: {}
+  caddy_log: {}
