@@ -1,40 +1,62 @@
 {% extends "base.html" %}
 
 {% block custom_style %}
-    a {
-    text-decoration: none;
+  @media (min-width: 577px) {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
     }
-    .card:hover {
+    .col-md-4 {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2.5rem;
+    }
+    .col-md-4 > a {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+  .card:hover {
     transform: scale(1.03);
     border: 3px solid #007bff;
-    }
-    .card-body {
-    height: 13vw;
-    overflow: hidden;
-    }
-    @media (max-width: 576px) {
-    .card-body {
-        height: auto; /* Set the desired height for small screens */
-    }
-    }
-    @media (max-height: 600px) {
-    .card-body .card-text {
-        display: none;
-    }
-    .card-title {
-        white-space: normal; /* Allow the header to wrap to the next line */
-        overflow: hidden; /* Hide the overflowed text */
-        text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
-        display: -webkit-box; /* Use -webkit-box for multi-line ellipsis */
-        -webkit-line-clamp: 2; /* Limit to 2 lines */
-        -webkit-box-orient: vertical; /* Set box orientation to vertical */
-    }
-    }
-    .card-img-top {
+  }
+  @media (max-width: 576px) {
+  .card-body {
+    height: auto; /* Set the desired height for small screens */
+  }
+  }
+  @media (max-height: 600px) {
+  .card-body .card-text {
+    display: none;
+  }
+  .card-title {
+    white-space: normal; /* Allow the header to wrap to the next line */
+    overflow: hidden; /* Hide the overflowed text */
+    text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
+    display: -webkit-box; /* Use -webkit-box for multi-line ellipsis */
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical; /* Set box orientation to vertical */
+  }
+  }
+  .card-img-top {
     height: 40vh;
     object-fit: cover;
-    }
-    .source-inline {
+  }
+  .source-inline {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -42,10 +64,10 @@
     padding: 5px;
     text-decoration: none;
     font-size: 12px;
-    }
-    .source-inline:hover {
+  }
+  .source-inline:hover {
     transform: scale(1.03);
-    }
+  }
 {% endblock %}
 
 {% block content %}
@@ -57,7 +79,7 @@
     <p>Here are some of the projects I have been working on:</p>
     <div class="row mb-5">
         {% for project in projects %}
-            <div class="col-md-4 mt-3">
+            <div class="col-md-4">
                 {% if project.link %}
                     <a href="{{ url_for('project', link=project.link) }}">
                 {% endif %}
