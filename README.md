@@ -28,6 +28,11 @@ pdm install
 
 Note: On windows uwsgi cannot be installed because it is a unix only package. You need to skip the installation process.
 
+### setup venv in nixos
+to just use venv create a virtualenv with: `nix-shell -p python3 --command "python -m venv .venv --copies"`
+
+Other options can be found [here](https://wiki.nixos.org/wiki/Python).
+
 
 # Deployment
 

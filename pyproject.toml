@@ -14,7 +14,7 @@ dependencies = [
     "psycopg2-binary",
     "python-dotenv",
     "jsonschema",
-    "uWSGI"
+    # "uwsgi"
 ]
 requires-python = ">=3.12"
 readme = "README.md"
