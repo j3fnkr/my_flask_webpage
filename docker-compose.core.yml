@@ -1,0 +1,55 @@
+
+services:
+  web-app:
+    build: .
+    container_name: web_app_jan
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      FLASK_ENV: production
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
+    networks:
+      - ${NETWORK}
+    volumes:
+      - ./src:/home/app/src
+  postgres:
+    image: postgres:17.4
+    container_name: postgres_jan
+    restart: unless-stopped
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - proxy:
+          name: ${NETWORK}
+    read_only: true
+  goaccess:
+    image: allinurl/goaccess:latest
+    volumes:
+      - ./goaccess/goaccess.conf:/srv/config/goaccess.conf:ro
+      - caddy_log:/srv/logs:ro  # read the combined log from Caddy
+      - ./goaccess/geo:/geo:ro  # GeoIP DB
+      - goaccess_html:/usr/share/caddy/html:rw  # where the HTML lives
+    depends_on:
+      - caddy
+    command: ["--no-global-config", 
+              "--config-file=/srv/config/goaccess.conf", 
+              "--ws-url=wss://${HOST_DOMAIN}:443/stats/socket"
+             ]
+    restart: unless-stopped  
+    networks:
+      - ${NETWORK}
+
+volumes:
+  pgdata: {}
+  goaccess_html: {}
+
