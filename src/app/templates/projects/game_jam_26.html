@@ -1,0 +1,85 @@
+
+{% extends "project.html" %}
+{% from "macros.html" import render_image %}
+
+{% block project_idea %}
+A random topic, two days time, in the end submission of a playable game - this is a GAME JAM.
+
+<br>
+
+We created Calavera - a 4x4 tiles game where you dance with four differenc characters through the crowd of a mask ball.
+You try to find the opponents king or the princess to win the game.
+You can play the game <a href="https://pebll.itch.io/calavera" target="_blank">here</a>
+
+{% endblock %}
+
+{% block description %}
+</p>
+<h4>About the <a href="https://globalgamejam.org/" target="_blank">Global Game Jam 2026</a></h4>
+<p>The global game jam (GGJ) is an event were people around the world meet up in different sites to plan, design and 
+create a game and submit it before the deadline. The GGJ team publishes a theme every year, which should 
+be included in any way into your game idea. The theme of 2026th game jam was "mask".
+</p>
+
+<!--- <h4>Requirements</h4>
+<ul>
+    <li>Laptop</li>
+    <li>A game engine (in our case we were biased towards godot as we participated  in the game jam of the GODOT Stammtisch e. v.)</li>
+    <li>A free weekend</li>
+    <li>Instruments (in case you want to record your own music)</li>
+    <li>motivation, joy and team spirit</li>
+</ul>
+
+<br>
+--->
+
+<h4>My Team</h4>
+<p>
+Our team consisted of three jammers, two friends of mine and me. They already participated in the 2025 game and so they were more experienced than I.
+It was my first jam event and I did not even use any kind of game engine until the first day of the game.
+</p>
+
+<h4>The Location</h4>
+<p>
+We participated in the <a href="https://godot-karlsruhe.de/?trk=public_post-text" target="_blank" class="link">GODOT Stammtisch e. v.</a> game site in Karlsruhe. It was very well organized and breakfast, pizza and snacks were provided with much love. This was the perfect environment for a two day long jam event to fully focus on the task to 
+finish the game.
+
+{% endblock %}
+
+{% block docu %}
+<div class="row">
+    <div class="col-md-6">
+        {{ render_image('img/ggj26/calavera.png', alt='Calavera game field', link='https://pebll.itch.io/calavera', link_text='calavera @ itch.io') }}
+        <h4>The design process of Calavera</h4>
+        <p>
+          On Friday night we installed the godot game engine and brainstormed about different ideas for a game related to the 
+          mask topic. After agreeing on the game idea, we distributed roles - art, music, game logic. We went to bed early to continue fresh on another day.
+        </p>
+        <p>
+          Saturday was the main implementation day. 
+          We started early with breakfast on the game jam site. We had the deadline at midnight to submit a sneak preview video           to the jam site's organizers. 
+          I worked mainly on the game logic
+          This was the milestone we set for the day - still we missed the deadline by over 15 minutes. 
+        </p>
+        <p>
+          For Sunday we knew that we could not go over the deadline again, so we wrapped up the what was still missing and what
+          we definitely wanted implemented. This was the main focus now. Every minute counted.
+          In the late afternoon, I focused on the implementation of sound effects and the background music.
+          We recorded three pieces by ourselves (two with guitar and one with the violin), which we wanted to use as background
+          music.
+          This time we made the deadline even though it was rough again.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4>Calavera: The Gameplay</h4>
+        <p>
+          Lorem ipsum dolor sit amet...
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block takeaway %}
+
+{% endblock %}

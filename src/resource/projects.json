@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "title": "Calavera at GGJ 2026",
+      "title_brief": "GGJ 2026",
+      "period": "30. Jan - 01. Feb 2026",
+      "description": "Creating a game in two days at global game jam",
+      "link": "game_jam_26",
+      "link_ext": "",
+      "img_folder": "ggj26",
+      "bg_image": "img/ggj26/calavera.png",
+      "image": {
+        "src": "img/ggj26/calavera.png",
+        "alt": "calavera banner",
+        "cc": "",
+        "cc_author": "Jan Fenker"
+      }
+    },
+
+    {
       "title": "Hosting a [matrix] Server",
       "title_brief": "Matrix Server",
       "period": "May 2025 - Aug 2025",

@@ -12,3 +12,6 @@ src/dev.db
 __pycache__
 .env
 *.db
+.envrc
+opencode.json
+.direnv
