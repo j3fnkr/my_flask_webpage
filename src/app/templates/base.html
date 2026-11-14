@@ -17,6 +17,10 @@
             background-color: rgba(35, 151, 35, 0.94);
         }
 
+        .navbar-green {
+            background-color: #3aa33a;
+        }
+
         #toggleButton[aria-expanded="true"] ~ .navbar-collapse .nav-item.position-absolute {
             position: static !important;
         }
@@ -74,7 +78,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-success">
+<nav class="navbar navbar-expand-lg navbar-light navbar-green">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('index') }}">Jan Fenker</a>
         <button id="toggleButton" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
