@@ -61,6 +61,11 @@ display: block;
 background: transparent;
 border: 0;
 }
+/* anchors the prev/next arrows: top/bottom of the stage = the image's
+   vertical range, so the arrows no longer overlay the close button */
+.lightbox-stage {
+position: relative;
+}
 #lightboxImage {
 display: block;
 margin-inline: auto;
@@ -182,8 +187,20 @@ z-index: 1;
         <div class="modal-content bg-transparent border-0">
             <button type="button" class="btn-close btn-close-white ms-auto me-2 mt-2"
                     data-bs-dismiss="modal" aria-label="Close"></button>
-            <img id="lightboxImage" src="" alt="" class="bg-white rounded p-1 mb-3"
-                 data-bs-dismiss="modal">
+            <div class="lightbox-stage">
+                <img id="lightboxImage" src="" alt="" class="bg-white rounded p-1 mb-3"
+                     data-bs-dismiss="modal">
+                <button class="carousel-control-prev" id="lightboxPrev" type="button"
+                        aria-label="Previous image">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" id="lightboxNext" type="button"
+                        aria-label="Next image">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -197,12 +214,48 @@ z-index: 1;
 {# Runs on every project page: makes all carousel images open the lightbox.
    Separate block from custom_script, which child pages may override. #}
 {% block lightbox_script %}
-document.querySelectorAll('.carousel-item img').forEach(function (img) {
+const galleryImages = Array.from(document.querySelectorAll('.carousel-item img'));
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('imageLightbox'));
+let lightboxIndex = 0;
+
+function showLightboxImage(index) {
+    // wrap around at both ends
+    lightboxIndex = (index + galleryImages.length) % galleryImages.length;
+    const img = galleryImages[lightboxIndex];
+    lightboxImage.src = img.src;
+    lightboxImage.alt = img.alt;
+}
+
+galleryImages.forEach(function (img) {
     img.addEventListener('click', function () {
-        const lightboxImage = document.getElementById('lightboxImage');
-        lightboxImage.src = img.src;
-        lightboxImage.alt = img.alt;
-        bootstrap.Modal.getOrCreateInstance(document.getElementById('imageLightbox')).show();
+        showLightboxImage(galleryImages.indexOf(img));
+        lightboxInstance.show();
     });
+});
+document.getElementById('lightboxPrev').addEventListener('click', function () {
+    showLightboxImage(lightboxIndex - 1);
+});
+document.getElementById('lightboxNext').addEventListener('click', function () {
+    showLightboxImage(lightboxIndex + 1);
+});
+// Place the arrows halfway between the dialog edge and the image edge.
+// The gap depends on the displayed image's width, so measure it and offset
+// the arrows by half of it.
+const lightboxContent = document.querySelector('#imageLightbox .modal-content');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+function positionLightboxArrows() {
+    const gap = Math.max(0, (lightboxContent.clientWidth - lightboxImage.offsetWidth) / 2);
+    lightboxPrev.style.left = (gap / 2) + 'px';
+    lightboxNext.style.right = (gap / 2) + 'px';
+}
+lightboxImage.addEventListener('load', positionLightboxArrows);
+document.getElementById('imageLightbox').addEventListener('shown.bs.modal', positionLightboxArrows);
+window.addEventListener('resize', positionLightboxArrows);
+// left/right arrow keys navigate while the lightbox is open
+document.getElementById('imageLightbox').addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { showLightboxImage(lightboxIndex - 1); }
+    else if (e.key === 'ArrowRight') { showLightboxImage(lightboxIndex + 1); }
 });
 {% endblock %}
