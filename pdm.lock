@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:c03f28aeef43ef728c020ca315d303d53ffca04d6146565e91ac9afb944b2a5b"
+content_hash = "sha256:953b672f04baa9f184d9fb78c9f1d3751e2d7186235bf263937d60055e023ee9"
 
 [[metadata.targets]]
 requires_python = ">=3.12"
@@ -408,15 +408,6 @@ groups = ["default"]
 files = [
     {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
-]
-
-[[package]]
-name = "uwsgi"
-version = "2.0.28"
-summary = "The uWSGI server"
-groups = ["default"]
-files = [
-    {file = "uwsgi-2.0.28.tar.gz", hash = "sha256:79ca1891ef2df14508ab0471ee8c0eb94bd2d51d03f32f90c4bbe557ab1e99d0"},
 ]
 
 [[package]]

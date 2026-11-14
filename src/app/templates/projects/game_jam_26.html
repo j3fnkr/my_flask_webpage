@@ -1,0 +1,107 @@
+
+{% extends "project.html" %}
+{% from "macros.html" import render_image %}
+
+{% block project_idea %}
+A random topic, two days' time, and a playable game to submit at the end - that's a GAME JAM.
+
+<br>
+
+We created Calavera - a 4x4 tile game where you dance with four different characters through the crowd at a masquerade ball.
+You try to find the opponent's king or the princess to win the game.
+You can play the game <a href="https://pebll.itch.io/calavera" target="_blank">here</a>.
+
+{% endblock %}
+
+{% block description %}
+</p>
+<h4>About the <a href="https://globalgamejam.org/" target="_blank">Global Game Jam 2026</a></h4>
+<p>The Global Game Jam (GGJ) is an event where people around the world meet up at various sites to plan, design and
+create a game, and submit it before the deadline. The GGJ team publishes a theme every year, which should
+be incorporated into your game idea in some way. The theme of the 2026 game jam was "mask".
+</p>
+
+<!--- <h4>Requirements</h4>
+<ul>
+    <li>Laptop</li>
+    <li>A game engine (in our case we were biased towards godot as we participated  in the game jam of the GODOT Stammtisch e. v.)</li>
+    <li>A free weekend</li>
+    <li>Instruments (in case you want to record your own music)</li>
+    <li>motivation, joy and team spirit</li>
+</ul>
+
+<br>
+--->
+
+<h4>My Team</h4>
+<p>
+Our team consisted of three jammers - two of my friends and me. They had already participated in the 2025 game jam, so they were more experienced than me.
+It was my first jam event and I had never used a game engine before the first day of the jam.
+</p>
+
+<h4>The Location</h4>
+<p>
+We took part in the jam at the <a href="https://godot-karlsruhe.de/?trk=public_post-text" target="_blank" class="link">GODOT Stammtisch e. v.</a> site in Karlsruhe. It was very well organized, and breakfast, pizza and snacks were provided with much love. This was the perfect environment for a two-day-long jam event. We could fully focus on the task of
+finishing the game.
+</p>
+
+{% endblock %}
+
+{% block docu %}
+<div class="row">
+    <div class="col-md-6">
+        <h4>The design process of Calavera</h4>
+        {{ render_image('img/ggj26/calavera.png', alt='Calavera game field', link='https://pebll.itch.io/calavera', link_text='calavera @ itch.io') }}
+        <p>
+          On Friday night we installed the Godot game engine and brainstormed ideas for a game around the mask theme.
+          After agreeing on the game idea, we assigned the roles - art, music and game logic. We went to bed early to start fresh the next day.
+        </p>
+        <p>
+          Saturday was the main implementation day.
+          We started early with breakfast at the jam site. We had a midnight deadline to submit a sneak preview video
+          to the jam site's organizers.
+          I mainly worked on the game logic.
+          This was the milestone we had set for the day - yet we missed the deadline by over 15 minutes.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <p>
+          On Sunday, we knew we could not miss the deadline again, so we wrapped up what was still missing and what
+          we definitely wanted to see implemented. This was our main focus. Every minute counted.
+          In the late afternoon, I focused on implementing the sound effects and the background music.
+          We recorded three pieces ourselves (two on guitar, one on violin), which we wanted to use as background
+          music.
+          This time we made the deadline, even though it was close again.
+        </p>
+        <h4>Calavera: The Gameplay</h4>
+        <div class="mb-1">
+        <p>
+          Find more information about the project on its GGJ page at <a href="https://globalgamejam.org/games/2026/calavera-5" target="_blank">ggj.org</a>.
+        </p>
+        </div>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for img in project.gallery %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    {{ render_image(img.src, alt=img.alt, link=img.cc, link_text=img.cc_author) }}
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block takeaway %}
+
+{% endblock %}
