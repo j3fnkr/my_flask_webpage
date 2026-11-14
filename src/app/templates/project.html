@@ -66,6 +66,16 @@ border: 0;
 .lightbox-stage {
 position: relative;
 }
+/* fixed inset from the dialog edge, so the arrows sit closer to the image;
+   narrow 3rem strips keep the icons near that offset */
+#lightboxPrev {
+left: 8rem;
+width: 3rem;
+}
+#lightboxNext {
+right: 8rem;
+width: 3rem;
+}
 #lightboxImage {
 display: block;
 margin-inline: auto;
@@ -239,20 +249,6 @@ document.getElementById('lightboxPrev').addEventListener('click', function () {
 document.getElementById('lightboxNext').addEventListener('click', function () {
     showLightboxImage(lightboxIndex + 1);
 });
-// Place the arrows halfway between the dialog edge and the image edge.
-// The gap depends on the displayed image's width, so measure it and offset
-// the arrows by half of it.
-const lightboxContent = document.querySelector('#imageLightbox .modal-content');
-const lightboxPrev = document.getElementById('lightboxPrev');
-const lightboxNext = document.getElementById('lightboxNext');
-function positionLightboxArrows() {
-    const gap = Math.max(0, (lightboxContent.clientWidth - lightboxImage.offsetWidth) / 2);
-    lightboxPrev.style.left = (gap / 2) + 'px';
-    lightboxNext.style.right = (gap / 2) + 'px';
-}
-lightboxImage.addEventListener('load', positionLightboxArrows);
-document.getElementById('imageLightbox').addEventListener('shown.bs.modal', positionLightboxArrows);
-window.addEventListener('resize', positionLightboxArrows);
 // left/right arrow keys navigate while the lightbox is open
 document.getElementById('imageLightbox').addEventListener('keydown', function (e) {
     if (e.key === 'ArrowLeft') { showLightboxImage(lightboxIndex - 1); }
