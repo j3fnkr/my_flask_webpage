@@ -49,6 +49,28 @@ background-color: #f9f9f9;
 font-style: italic;
 }
 
+/* Carousel images open a large lightbox view when clicked */
+.carousel-item img {
+cursor: zoom-in;
+}
+/* Lightbox: plain block flow instead of the modal's flex layout, so the
+   max-width/max-height constraints shrink the image strictly proportional
+   to its intrinsic aspect ratio */
+#imageLightbox .modal-content {
+display: block;
+background: transparent;
+border: 0;
+}
+#lightboxImage {
+display: block;
+margin-inline: auto;
+cursor: zoom-out;
+width: auto;
+height: auto;
+max-width: 100%;
+max-height: calc(100vh - 6rem);
+}
+
 
 {% if project.bg_image and (project.bg_image | length > 0) %}
 .bg_banner {
@@ -153,9 +175,34 @@ z-index: 1;
     </div>
     -->
 </div>
+
+<!-- Lightbox: click a carousel image to inspect it in full size, click it again to close -->
+<div class="modal fade" id="imageLightbox" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <button type="button" class="btn-close btn-close-white ms-auto me-2 mt-2"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            <img id="lightboxImage" src="" alt="" class="bg-white rounded p-1 mb-3"
+                 data-bs-dismiss="modal">
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 
 {% block custom_script %}
 
+{% endblock %}
+
+{# Runs on every project page: makes all carousel images open the lightbox.
+   Separate block from custom_script, which child pages may override. #}
+{% block lightbox_script %}
+document.querySelectorAll('.carousel-item img').forEach(function (img) {
+    img.addEventListener('click', function () {
+        const lightboxImage = document.getElementById('lightboxImage');
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('imageLightbox')).show();
+    });
+});
 {% endblock %}
