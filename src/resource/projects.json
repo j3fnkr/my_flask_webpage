@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "title": "Robotics, Automation, and Systems Control Lab",
+      "title_brief": "RASCL Lab",
+      "period": "SS 2026",
+      "description": "Complex automation task with laboratory-scale robotic manipulator arms (lab course by IRS-RUS and IRS-VSA at KIT).",
+      "link": "rascl",
+      "link_ext": "",
+      "img_folder": "rascl",
+      "bg_image": "",
+      "image": {
+        "src": "img/rascl/rascl.png",
+        "alt": "RASCL Lab",
+        "cc": "",
+        "cc_author": "Jan Fenker"
+      }
+    },
+
+    {
       "title": "Calavera at GGJ 2026",
       "title_brief": "GGJ 2026",
       "period": "30. Jan - 01. Feb 2026",

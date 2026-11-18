@@ -1,0 +1,77 @@
+{% extends "project.html" %}
+
+{% block project_idea %}
+RASCL is the abbreviation for "Robotics, Automation, and Systems Control Lab", a lab course for master
+students at KIT. It is offered by the Institute for Radio Frequency Engineering and Electronics (IRS),
+particularly the chairs of Regelungs- und Steuerungssysteme (RUS) and Automatisierungstechnik (VSA).
+Within a complex automation task, teams of three design and build an automation concept end-to-end,
+covering hardware design, communication over an industrial bus system, drive system control and more,
+working with laboratory-scale robotic manipulator arms.
+{% endblock %}
+
+{% block description %}
+</p>
+<h4>Teaching Content</h4>
+<p>
+    This module is designed to teach students the stated qualification objectives in the fields of
+    automation, robotics and control by means of a complex automation task. The task not only covers the
+    automation concept itself but also underlying aspects like hardware design, communication using an
+    industrial bus system, drive system control and others. To do so, laboratory systems, namely
+    laboratory scale robotic manipulator arms, are provided to the students.
+</p>
+<h4>Examination</h4>
+<p>
+    The examination consists of pitches after every thematic block, a final presentation and an oral
+    examination of 20 minutes. Additionally, the produced code and CAD models are evaluated. The module
+    grade results from the assessment of the pitches, the presentation, the oral exam and the code and
+    CAD quality.
+</p>
+<h4>Enrollment</h4>
+<p>
+    Due to the limited number of 27 places, students must apply to participate.
+</p>
+<h4>Recommended Background</h4>
+<p>
+    Knowledge in automation, control and robotics in general. Recommended, but not mandatory, lectures are:
+</p>
+<ul>
+    <li><a href="https://www.irs.kit.edu/Lectures_4827.php" rel="noopener">Practical Tools for Control Engineers</a></li>
+    <li><a href="https://www.irs.kit.edu/Lectures_5250.php" rel="noopener">Cyber Physical Modeling</a></li>
+    <li><a href="https://www.irs.kit.edu/Lectures_5336.php" rel="noopener">Seminar Industrial Process and Plant Engineering</a></li>
+    <li><a href="https://www.irs.kit.edu/Lectures_ODS.php" rel="noopener">Optimal Control</a></li>
+    <li><a href="https://www.irs.kit.edu/Lectures_RLM.php" rel="noopener">Multivariable Control Systems</a></li>
+    <li><a href="https://www.irs.kit.edu/Lectures_NLR.php" rel="noopener">Nonlinear Control Systems</a></li>
+</ul>
+{% endblock %}
+
+{% block docu %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h4>Key facts</h4>
+        <ul>
+            <li>Lecturers: M. Sc. Pirmin Breisacher, M. Sc. Eric Wagemann, M. Sc. Linus Witucki</li>
+            <li>Semester: SS 26</li>
+            <li>Location: IRS, Building 30.33, Room 412 (appointments at the lab facility are made individually)</li>
+            <li>SWS: 4, ECTS: 6, LVNr.: 2303195</li>
+            <li>Contact: <a href="mailto:rascl@irs.kit.edu">rascl@irs.kit.edu</a></li>
+        </ul>
+        <h4>Mode of the lab course</h4>
+        <p>
+            Students work in teams of three, which are formed during the kick-off workshop. Each team can
+            book individual time slots in the lab space. The introductory lecture takes place on: TBD.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4>Project video</h4>
+        <p>Watch the lab project in action (video will follow):</p>
+        <!-- embed video -->
+        <div class="embed-responsive embed-responsive-16by9">
+            <!-- PLACEHOLDER: replace img/rascl/promo_vid.mp4 with the actual video file -->
+            <video class="embed-responsive-item w-100" controls>
+                <source src="{{ url_for('static', filename='img/rascl/promo_vid.mp4') }}"
+                        type="video/mp4"/>
+            </video>
+        </div>
+    </div>
+</div>
+{% endblock %}
